@@ -1,8 +1,8 @@
 def main():
     board = [
-        [" "," "," "],
-        [" "," "," "],
-        [" "," "," "]
+        [None,None,None],
+        [None,None,None],
+        [None,None,None]
         ]
 
     active_player_index = 0
@@ -13,13 +13,16 @@ def main():
         player = players[active_player_index]
         announce_turn(player)
         show_board(board)
+        print()
         input("pause")
         
 def show_board(board):
     for line in board:
-        string = f"| {line[0]} | {line[1]} | {line[2]} |"
-        print(string)
-        print("-"*len(string))
+        print("| ", end="")
+        for cell in line:
+            symbol = cell if cell is not None else "_"
+            print(symbol, end=" | ")
+        print()
 
 def announce_turn(player):
     print()
