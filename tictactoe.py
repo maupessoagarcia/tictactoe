@@ -8,17 +8,24 @@ def main():
     active_player_index = 0
     players = ["You", "Computer"]
     symbols = ["X","O"]
+    player = players[active_player_index]
 
     while not find_winner(board):
         player = players[active_player_index]
         symbol = symbols[active_player_index]
         announce_turn(player)
         show_board(board)
+        print()
         if not choose_location(board, symbol):
             print("That isn't an option, try again.")
             continue
         print()
-        input("pause")
+        active_player_index = (active_player_index + 1)% len(players)
+        if find_winner(board):
+    
+            print(f"Game over! {player} has won with the board: ")
+            print()
+            show_board(board)
 
 
 def choose_location(board,symbol):
@@ -55,7 +62,32 @@ def announce_turn(player):
     print()
 
 def find_winner(board):
+    sequences = get_winning_sequences(board)
+
+    for cells in sequences:
+        symbol1 = cells[0]
+        if symbol1 and all(symbol1 == cell for cell in cells):
+            return True
+
     return False
+    
+
+def get_winning_sequences(board):
+    sequences = []
+    #rows
+    sequences.extend(board)
+
+    #columns
+
+    for ind in range(0,3):
+        sequences.append([board[0][ind],board[1][ind],board[2][ind]])
+
+    #diagonals
+
+    diag = [[board[0][0],board[1][1],board[2][2]],[board[0][2],board[1][2],board[2][0]]]
+    sequences.extend(diag)
+
+    return sequences
 
 
 if __name__ == "__main__":
