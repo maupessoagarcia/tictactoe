@@ -11,10 +11,35 @@ def main():
 
     while not find_winner(board):
         player = players[active_player_index]
+        symbol = symbols[active_player_index]
         announce_turn(player)
         show_board(board)
+        if not choose_location(board, symbol):
+            print("That isn't an option, try again.")
+            continue
         print()
         input("pause")
+
+
+def choose_location(board,symbol):
+    row = int(input("Choose which row: "))
+    column = int(input("Choose which column: "))
+
+    row -=1
+    column-=1
+    if row<0 or row>= len(board):
+        return False
+    if column<0 or column>= len(board[0]):
+        return False
+    
+
+    cell = board[row][column]
+    if cell is not None: 
+        return False
+
+    board[row][column] = symbol
+    return True
+
         
 def show_board(board):
     for line in board:
