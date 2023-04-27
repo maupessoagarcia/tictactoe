@@ -11,6 +11,12 @@ def main():
     player = players[active_player_index]
 
     while not find_winner(board):
+        if full_board(board):
+            print(f"Game over! It was a tie, with this board: ")
+            print()
+            show_board(board)
+            print()
+            break
         player = players[active_player_index]
         symbol = symbols[active_player_index]
         announce_turn(player)
@@ -26,6 +32,7 @@ def main():
             print(f"Game over! {player} has won with the board: ")
             print()
             show_board(board)
+            print()
 
 
 def choose_location(board,symbol):
@@ -89,6 +96,16 @@ def get_winning_sequences(board):
 
     return sequences
 
+def full_board(board):
+    for row in board:
+        for cell in row:
+            if cell == None:
+                return False
+    return True
+
 
 if __name__ == "__main__":
     main()
+
+
+#IMPLEMENT NO WINNER LOGIC
